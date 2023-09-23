@@ -31,23 +31,23 @@ public class BodyManager : MonoBehaviour
         // 체질에 따라 초기 상태 설정
         switch (newBodyType)
         {
-            case BodyType.Obese:
-                height = 173f;
-                weight = 90f;
-                break;
-            case BodyType.Diabetic:
-                height = 173f;
-                weight = 74f;
-                break;
-            case BodyType.Athlete:
-                height = 173f;
-                weight = 74f;
-                break;
-            case BodyType.Underweight:
-                height = 173f;
-                weight = 55f;
-                break;
+        case BodyType.Obese:
+            height = 173f;
+            weight = 90f;
+            break;
+        case BodyType.Diabetic:
+            height = 173f;
+            weight = 74f;
+            break;
+        case BodyType.Athlete:
+            height = 173f;
+            weight = 74f;
+            break;
+        case BodyType.Underweight:
+            height = 173f;
+            weight = 55f;
+            break;
         }
     }
-    
+
 }
