@@ -5,14 +5,13 @@ using TMPro;
 
 public class SelectSceneController : MonoBehaviour
 {
-    public Text recommendedPhysiqueText;
-
-    void Start()
+    private void Start()
     {
-        // PlayerPrefs¿¡¼­ ÃßÃµ Ã¼Áú Á¤º¸¸¦ °¡Á®¿É´Ï´Ù.
-        string recommendedPhysique = PlayerPrefs.GetString("RecommendedPhysique", "Normal");
+        // PlayerPrefsì—ì„œ ì¶”ì²œ ì²´ì§ˆ ì •ë³´ë¥¼ ì½ì–´ì˜µë‹ˆë‹¤.
+        string recommendedPhysique = PlayerPrefs.GetString("RecommendedPhysique");
 
-        // °¡Á®¿Â Á¤º¸¸¦ UI Text¿¡ Ç¥½ÃÇÕ´Ï´Ù.
-        recommendedPhysiqueText.text = "Recommended Physique: " + recommendedPhysique;
+        // ì¶”ì²œ ì²´ì§ˆì— í•´ë‹¹í•˜ëŠ” ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”í•©ë‹ˆë‹¤.
+        GameObject recommendedObject = GameObject.Find(recommendedPhysique); // ì¶”ì²œ ì²´ì§ˆ ì˜¤ë¸Œì íŠ¸ì˜ ì´ë¦„ê³¼ ë™ì¼í•˜ê²Œ ì„¤ì •
+        recommendedObject.SetActive(true);
     }
 }
