@@ -25,16 +25,16 @@ public class MainSceneController : MonoBehaviour
         // BodyType에 따라 적절한 프리팹을 반환합니다.
         switch (bodyType)
         {
-            case BodyType.Obese:
-                return obeseCharacterPrefab;
-            case BodyType.Diabetic:
-                return diabeticCharacterPrefab;
-            case BodyType.Athlete:
-                return athleteCharacterPrefab;
-            case BodyType.Underweight:
-                return underweightCharacterPrefab;
-            default:
-                return null;
+        case BodyType.Obese:
+            return obeseCharacterPrefab;
+        case BodyType.Diabetic:
+            return diabeticCharacterPrefab;
+        case BodyType.Athlete:
+            return athleteCharacterPrefab;
+        case BodyType.Underweight:
+            return underweightCharacterPrefab;
+        default:
+            return null;
         }
     }
 }
