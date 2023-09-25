@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using UnityEngine.UIElements;
 
 public class InformationSceneController : MonoBehaviour
 {
@@ -10,46 +9,42 @@ public class InformationSceneController : MonoBehaviour
     public TMP_InputField heightInputField;
     public TMP_Dropdown purposeDropdown;
 
-
     public void CalculateBMIAndRecommend()
     {
-        // »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â¹ŞÀº ¸ö¹«°Ô¿Í Å°¸¦ °¡Á®¿È
+        // ì‚¬ìš©ìë¡œë¶€í„° ì…ë ¥ë°›ì€ ëª¸ë¬´ê²Œì™€ í‚¤ë¥¼ ê°€ì ¸ì˜´
         float weight = float.Parse(weightInputField.text);
         float height = float.Parse(heightInputField.text);
 
-        // BMI °è»ê
+        // BMI ê³„ì‚°
         float bmi = weight / (height * height);
 
-        // ¿îµ¿ ¸ñÀû¿¡ µû¶ó ÃßÃµ Ã¼ÁúÀ» ¼³Á¤
+        // ìš´ë™ ëª©ì ì— ë”°ë¼ ì¶”ì²œ ì²´ì§ˆì„ ì„¤ì •
         string recommendedPhysique = GetRecommendedPhysique(bmi, purposeDropdown.value);
 
-        // ÃßÃµ Ã¼ÁúÀ» PlayerPrefs¿¡ ÀúÀå
+        // ì¶”ì²œ ì²´ì§ˆì„ PlayerPrefsì— ì €ì¥
         PlayerPrefs.SetString("RecommendedPhysique", recommendedPhysique);
         PlayerPrefs.Save();
+
+        // SelectSceneìœ¼ë¡œ ì „í™˜
+        SceneManager.LoadScene("SelectScene");
     }
 
     private string GetRecommendedPhysique(float bmi, int purposeIndex)
     {
-        // BMI¿Í ¿îµ¿ ¸ñÀû¿¡ µû¶ó ÃßÃµ Ã¼ÁúÀ» °áÁ¤ÇÏ´Â ·ÎÁ÷
-        if (purposeIndex == 0) // °Ç°­
+        // BMIì™€ ìš´ë™ ëª©ì ì— ë”°ë¼ ì¶”ì²œ ì²´ì§ˆì„ ê²°ì •í•˜ëŠ” ë¡œì§
+        if (purposeIndex == 0) // ê±´ê°•
         {
             return bmi < 18.5f ? "Underweight" : bmi < 24.9f ? "Normal" : "Obese";
         }
-        else if (purposeIndex == 1) // ±ÙÀ°
+        else if (purposeIndex == 1) // ê·¼ìœ¡
         {
             return "Athlete";
         }
-        else if (purposeIndex == 2) // ´ç Á¶Àı
+        else if (purposeIndex == 2) // ë‹¹ ì¡°ì ˆ
         {
             return "Diabetic";
         }
 
         return "Normal";
-    }
-
-    public void ContinueToSelectScene()
-    {
-        // SelectSceneÀ¸·Î ÀüÈ¯
-        SceneManager.LoadScene("SelectScene");
     }
 }
