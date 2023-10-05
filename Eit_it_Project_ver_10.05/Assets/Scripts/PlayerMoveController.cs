@@ -39,11 +39,11 @@ public class PlayerMoveController : MonoBehaviour
 
     void PlayerMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal"); 
-        float verticalInput = Input.GetAxis("Vertical"); 
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime;
-     
+
 
 
         transform.position = new Vector3(
@@ -57,14 +57,14 @@ public class PlayerMoveController : MonoBehaviour
 
     void PlayerRotation()
     {
-        Quaternion currentRotation = transform.rotation; 
-        currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime); 
+        Quaternion currentRotation = transform.rotation;
+        currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         if (isRotating)
         {
             currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = currentRotation;
-          
+
             if (Quaternion.Angle(currentRotation, targetRotation) < 0.05f)
             {
                 isRotating = false;
@@ -74,14 +74,14 @@ public class PlayerMoveController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-               
+
                 targetRotation *= Quaternion.Euler(0, 90.0f, 0);
-                isRotating = true; 
+                isRotating = true;
             }
             else if (Input.GetKeyDown(KeyCode.Q))
             {
                 targetRotation *= Quaternion.Euler(0, -90.0f, 0);
-                isRotating = true; 
+                isRotating = true;
             }
         }
     }
@@ -91,7 +91,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         Ray forwardRay = new Ray(transform.position, transform.forward);
         Ray downwardRay = new Ray(transform.position, -transform.up);
-        
+
         Debug.DrawRay(transform.position, transform.up*1f, Color.green);
 
         RaycastHit forwarhit, downwarhit;
@@ -100,7 +100,7 @@ public class PlayerMoveController : MonoBehaviour
         {
             targetCube = forwarhit.collider.gameObject; // 타겟 오브젝트에 충돌 큐브 오브젝트 값 추가
 
-            // 등산 조건 검사 추가 09/30 
+            // 등산 조건 검사 추가 09/30
             cubeController = GetComponentInChildren<CubeController>();
             bool isMoving = cubeController.isMoving; // 큐브의 이동이 종료됐을때
 
@@ -109,11 +109,11 @@ public class PlayerMoveController : MonoBehaviour
 
             Ray targetCubeRay = new Ray(targetCube.transform.position, targetCube.transform.up); // 타겟 큐브 위쪽 방량으로 레이생성
             RaycastHit targetHit;
-                
+
             // 1. 올라가려는 큐브 위에 연속된 큐브가 있으면 막음 2. 공중, 떨어지는 도중 등반하기 막음 3. 플레이어의 머리위에 큐브가 있을때 막음
-            if (!Physics.Raycast(targetCubeRay, out targetHit, 1.0f) && 
-                Physics.Raycast(downwardRay, out downwarhit, 0.6f) &&
-                !isMoving && !isHeadColliding)
+            if (!Physics.Raycast(targetCubeRay, out targetHit, 1.0f) &&
+                    Physics.Raycast(downwardRay, out downwarhit, 0.6f) &&
+                    !isMoving && !isHeadColliding)
             {
                 StartCoroutine(MovementClimbing(targetCube));
             }
@@ -147,8 +147,8 @@ public class PlayerMoveController : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.F))
         {
-            isHoldMode = false; 
-            playerRb.useGravity = true; 
+            isHoldMode = false;
+            playerRb.useGravity = true;
         }
 
 
@@ -159,7 +159,7 @@ public class PlayerMoveController : MonoBehaviour
         if (Physics.Raycast(forwardRay, out forwarhit, 0.4f) && forwarhit.collider.CompareTag("Cube"))
         {
             targetCube = forwarhit.collider.gameObject;
-            
+
             Ray f_Ray = new Ray(targetCube.transform.position, targetCube.transform.forward);
             Debug.DrawRay(targetCube.transform.position, targetCube.transform.forward*1.5f, Color.red); // 앞
 
@@ -241,9 +241,9 @@ public class PlayerMoveController : MonoBehaviour
 
             //---------Up/Down Movement---------
             if (Physics.Raycast(f_Ray, out f_Hit, 0.7f) && f_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(b_Ray, out b_Hit, 0.7f) && b_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(r_Ray, out r_Hit, 0.7f) && r_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(l_Ray, out l_Hit, 0.7f) && l_Hit.collider.CompareTag("player"))
+                    Physics.Raycast(b_Ray, out b_Hit, 0.7f) && b_Hit.collider.CompareTag("player") ||
+                    Physics.Raycast(r_Ray, out r_Hit, 0.7f) && r_Hit.collider.CompareTag("player") ||
+                    Physics.Raycast(l_Ray, out l_Hit, 0.7f) && l_Hit.collider.CompareTag("player"))
             {
                 if (Input.GetKeyDown(KeyCode.S) && isHoldMode && !isHoldMoving && Physics.Raycast(d_Ray, out d_Hit, 0.5f) && d_Hit.collider.CompareTag("Cube"))
                 {
@@ -253,11 +253,11 @@ public class PlayerMoveController : MonoBehaviour
                 }
             }
             if (Physics.Raycast(f_Ray, out f_Hit, 0.7f) && f_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(b_Ray, out b_Hit, 0.7f) && b_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(r_Ray, out r_Hit, 0.7f) && r_Hit.collider.CompareTag("player") ||
-                Physics.Raycast(l_Ray, out l_Hit, 0.7f) && l_Hit.collider.CompareTag("player"))
+                    Physics.Raycast(b_Ray, out b_Hit, 0.7f) && b_Hit.collider.CompareTag("player") ||
+                    Physics.Raycast(r_Ray, out r_Hit, 0.7f) && r_Hit.collider.CompareTag("player") ||
+                    Physics.Raycast(l_Ray, out l_Hit, 0.7f) && l_Hit.collider.CompareTag("player"))
             {
-               // 구현해야함
+                // 구현해야함
 
             }
         }
@@ -270,9 +270,9 @@ public class PlayerMoveController : MonoBehaviour
         Vector3 start = transform.position;
         Vector3 end = start + (transform.forward + (transform.up *2)) * (targetCube.transform.localScale.y*0.5f);
         //Vector3 end = targetCube.transform.position + transform.up * 0.8f;
-        float journeyLength = Vector3.Distance(start, end); 
+        float journeyLength = Vector3.Distance(start, end);
 
-        float startTime = Time.time; 
+        float startTime = Time.time;
         float journeyDuration = journeyLength / moveSpeed;
 
         // 이동 중이면
@@ -285,13 +285,13 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         transform.position = end;
-    } 
+    }
 
 
     IEnumerator F_HangOnCube(GameObject targetCube) // 매달리기 동작이 완성되면 종료됨 < 기억해
     {
         isHoldMode = true; // 정상적인 이동 불가
-        playerRb.useGravity = false; // 중력 제거 
+        playerRb.useGravity = false; // 중력 제거
 
         Vector3 start = transform.position;
         Vector3 end = targetCube.transform.position - transform.forward * 0.8f;
@@ -316,7 +316,7 @@ public class PlayerMoveController : MonoBehaviour
     IEnumerator B_HangOnCube(GameObject targetCube)
     {
         isHoldMode = true; // 정상적인 이동 불가
-        playerRb.useGravity = false; // 중력 제거 
+        playerRb.useGravity = false; // 중력 제거
 
         Vector3 start = transform.position;
         Vector3 end = targetCube.transform.position + transform.forward * 0.8f;
@@ -347,7 +347,7 @@ public class PlayerMoveController : MonoBehaviour
     IEnumerator L_HangOnCube(GameObject targetCube)
     {
         isHoldMode = true; // 정상적인 이동 불가
-        playerRb.useGravity = false; // 중력 제거 
+        playerRb.useGravity = false; // 중력 제거
 
         Vector3 start = transform.position;
         Vector3 end = targetCube.transform.position - transform.right * 0.8f;
@@ -378,7 +378,7 @@ public class PlayerMoveController : MonoBehaviour
     IEnumerator R_HangOnCube(GameObject targetCube)
     {
         isHoldMode = true; // 정상적인 이동 불가
-        playerRb.useGravity = false; // 중력 제거 
+        playerRb.useGravity = false; // 중력 제거
 
         Vector3 start = transform.position;
         Vector3 end = targetCube.transform.position + transform.right * 0.8f;

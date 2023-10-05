@@ -10,8 +10,8 @@ public class CubeController : MonoBehaviour
 
     private GameObject targetCube;
 
-    private bool isMoving = false; 
-    private bool isRotating; 
+    private bool isMoving = false;
+    private bool isRotating;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class CubeController : MonoBehaviour
 
     void Update()
     {
-        isRotating = transform.parent.GetComponent<PlayerMoveController>().isRotating; 
+        isRotating = transform.parent.GetComponent<PlayerMoveController>().isRotating;
 
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
@@ -49,48 +49,48 @@ public class CubeController : MonoBehaviour
 
     IEnumerator pullingCube(GameObject cubeToMove)
     {
-        isMoving = true; 
+        isMoving = true;
 
-        Vector3 start = cubeToMove.transform.position; 
-        Vector3 end = start - transform.forward * cubeToMove.transform.localScale.z; 
+        Vector3 start = cubeToMove.transform.position;
+        Vector3 end = start - transform.forward * cubeToMove.transform.localScale.z;
         float journeyLength = Vector3.Distance(start, end); // public static float Distance(Vector3 a, Vector3 b);
 
-        float startTime = Time.time; 
-        float journeyDuration = journeyLength / pushPullSpeed; 
+        float startTime = Time.time;
+        float journeyDuration = journeyLength / pushPullSpeed;
 
-        while (Time.time - startTime < journeyDuration) 
+        while (Time.time - startTime < journeyDuration)
         {
-            float distanceCovered = (Time.time - startTime) * pushPullSpeed; 
+            float distanceCovered = (Time.time - startTime) * pushPullSpeed;
             float fractionOfJourney = distanceCovered / journeyLength;
-            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney); 
+            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney);
             yield return null;
         }
-        
+
         cubeToMove.transform.position = end;
-        isMoving = false; 
+        isMoving = false;
     }
 
 
     IEnumerator pushingCube(GameObject cubeToMove)
     {
-        isMoving = true; 
+        isMoving = true;
 
         Vector3 start = cubeToMove.transform.position;
         Vector3 end = start + transform.forward * cubeToMove.transform.localScale.z;
-        float journeyLength = Vector3.Distance(start, end); 
+        float journeyLength = Vector3.Distance(start, end);
 
         float startTime = Time.time;
-        float journeyDuration = journeyLength / pushPullSpeed; 
-        
+        float journeyDuration = journeyLength / pushPullSpeed;
+
         while (Time.time - startTime < journeyDuration)
         {
-            float distanceCovered = (Time.time - startTime) * pushPullSpeed; 
-            float fractionOfJourney = distanceCovered / journeyLength; 
-            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney); 
+            float distanceCovered = (Time.time - startTime) * pushPullSpeed;
+            float fractionOfJourney = distanceCovered / journeyLength;
+            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney);
             yield return null;
         }
 
-        cubeToMove.transform.position = end; 
-        isMoving = false; 
+        cubeToMove.transform.position = end;
+        isMoving = false;
     }
 }

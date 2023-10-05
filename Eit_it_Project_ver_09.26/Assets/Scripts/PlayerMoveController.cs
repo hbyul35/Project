@@ -7,12 +7,12 @@ public class PlayerMoveController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float maxMoveRange = 4.0f;
-    public float rotationSpeed = 2.0f; 
+    public float rotationSpeed = 2.0f;
     public bool isRotating = true;
 
     private bool isCliming = false;
     private GameObject targetCube;
-    private Quaternion targetRotation = Quaternion.identity; 
+    private Quaternion targetRotation = Quaternion.identity;
 
     void Start()
     {
@@ -29,12 +29,12 @@ public class PlayerMoveController : MonoBehaviour
 
     void PlayerMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal"); 
-        float verticalInput = Input.GetAxis("Vertical"); 
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime;
 
-        
+
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, -maxMoveRange, maxMoveRange),
             transform.position.y,
@@ -47,34 +47,34 @@ public class PlayerMoveController : MonoBehaviour
     void PlayerRotation()
     {
         Quaternion currentRotation = transform.rotation; // ���� ȸ����
-        currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime); 
+        currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         if (isRotating)
         {
             currentRotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = currentRotation;
-       
+
             if (Quaternion.Angle(currentRotation, targetRotation) < 0.05f)
             {
                 isRotating = false;
             }
         }
         else
-        {          
+        {
             if (Input.GetKeyDown(KeyCode.E))
-            {              
+            {
                 targetRotation *= Quaternion.Euler(0, -90.0f, 0);
-                isRotating = true; 
+                isRotating = true;
             }
             else if (Input.GetKeyDown(KeyCode.Q))
             {
                 targetRotation *= Quaternion.Euler(0, 90.0f, 0);
-                isRotating = true; 
+                isRotating = true;
             }
         }
     }
 
-    
+
     void ClimbPlayer()
     {
         Ray ray = new Ray(transform.position, transform.forward);
@@ -86,8 +86,8 @@ public class PlayerMoveController : MonoBehaviour
                 targetCube = hit.collider.gameObject; // 타겟 오브젝트에 충돌 큐브 오브젝트 값 추가
                 StartCoroutine(MovementClimbing(targetCube)); // 코루틴 시작
             }
-        }   
-     }
+        }
+    }
 
 
     IEnumerator MovementClimbing(GameObject targetCube)
@@ -96,7 +96,7 @@ public class PlayerMoveController : MonoBehaviour
 
         Vector3 start = transform.position; // 시작 위치 내가 있는곳
         Vector3 end = start + (transform.forward + (transform.up *2)) * (targetCube.transform.localScale.y*0.5f);
-        float journeyLength = Vector3.Distance(start, end); // 
+        float journeyLength = Vector3.Distance(start, end); //
 
         float startTime = Time.time; // 움직임 시작 시간
         float journeyDuration = journeyLength / moveSpeed;

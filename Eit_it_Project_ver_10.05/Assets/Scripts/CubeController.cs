@@ -13,7 +13,7 @@ public class CubeController : MonoBehaviour
     public bool isMoving = false;
 
     //PlayerMoveController에서 가져옴
-    private bool isRotating; 
+    private bool isRotating;
     private bool holdMode;
 
     void Start()
@@ -34,13 +34,13 @@ public class CubeController : MonoBehaviour
             {
                 targetCube = hit.collider.gameObject;
                 isRotating = transform.parent.GetComponent<PlayerMoveController>().isRotating; //PlayerMoveController::isRotating 회전 안할때
-                holdMode = transform.parent.GetComponent<PlayerMoveController>().isHoldMode; // PlayerMoveController::holdmode 껏을때 
+                holdMode = transform.parent.GetComponent<PlayerMoveController>().isHoldMode; // PlayerMoveController::holdmode 껏을때
 
                 if (Input.GetKey(KeyCode.W) && Input.GetKeyDown(KeyCode.Space) && !isMoving && !isRotating && !holdMode)
                 {
                     StartCoroutine(pushingCube(targetCube));
                 }
-                else if (Input.GetKeyDown(KeyCode.Space) && !isMoving &&!isRotating && !holdMode) 
+                else if (Input.GetKeyDown(KeyCode.Space) && !isMoving &&!isRotating && !holdMode)
                 {
                     StartCoroutine(pullingCube(targetCube));
                 }
@@ -50,27 +50,27 @@ public class CubeController : MonoBehaviour
 
     IEnumerator pullingCube(GameObject cubeToMove)
     {
-        isMoving = true; 
+        isMoving = true;
 
-        Vector3 start = cubeToMove.transform.position; 
-        Vector3 end = start - transform.forward * cubeToMove.transform.localScale.z; 
-        float journeyLength = Vector3.Distance(start, end); // public static float Distance(Vector3 a, Vector3 b);  
+        Vector3 start = cubeToMove.transform.position;
+        Vector3 end = start - transform.forward * cubeToMove.transform.localScale.z;
+        float journeyLength = Vector3.Distance(start, end); // public static float Distance(Vector3 a, Vector3 b);
 
-        float startTime = Time.time; 
-        float journeyDuration = journeyLength / pushPullSpeed; 
+        float startTime = Time.time;
+        float journeyDuration = journeyLength / pushPullSpeed;
 
-        
-        while (Time.time - startTime < journeyDuration) 
+
+        while (Time.time - startTime < journeyDuration)
         {
-            float distanceCovered = (Time.time - startTime) * pushPullSpeed; 
-            float fractionOfJourney = distanceCovered / journeyLength;  
-            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney); 
+            float distanceCovered = (Time.time - startTime) * pushPullSpeed;
+            float fractionOfJourney = distanceCovered / journeyLength;
+            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney);
             yield return null;
         }
 
         //�̵��Ϸ� ��
-        cubeToMove.transform.position = end; 
-        isMoving = false; 
+        cubeToMove.transform.position = end;
+        isMoving = false;
     }
 
     IEnumerator pushingCube(GameObject cubeToMove)
@@ -79,22 +79,22 @@ public class CubeController : MonoBehaviour
 
         Vector3 start = cubeToMove.transform.position;
         Vector3 end = start + transform.forward * cubeToMove.transform.localScale.z;
-        float journeyLength = Vector3.Distance(start, end); 
+        float journeyLength = Vector3.Distance(start, end);
 
         float startTime = Time.time;
-        float journeyDuration = journeyLength / pushPullSpeed; 
+        float journeyDuration = journeyLength / pushPullSpeed;
 
-        
+
         while (Time.time - startTime < journeyDuration)
         {
-            float distanceCovered = (Time.time - startTime) * pushPullSpeed; 
-            float fractionOfJourney = distanceCovered / journeyLength; 
-            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney); 
+            float distanceCovered = (Time.time - startTime) * pushPullSpeed;
+            float fractionOfJourney = distanceCovered / journeyLength;
+            cubeToMove.transform.position = Vector3.Lerp(start, end, fractionOfJourney);
             yield return null;
         }
 
         //�̵��Ϸ� ��
-        cubeToMove.transform.position = end; 
-        isMoving = false; 
+        cubeToMove.transform.position = end;
+        isMoving = false;
     }
 }
