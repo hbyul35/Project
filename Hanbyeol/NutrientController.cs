@@ -1,56 +1,71 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
-public enum BodyType
+public class NutrientController : MonoBehaviour
 {
-    Obese,                                               
-    Diabetic,                                     
-    Athlete,                                         
-    Underweight,                                     
-    Basic                                                
-}
+    // 플레이어의 영양소 상태
+    public float carbohydrates = 0f;                                      // 탄수화물
+    public float protein = 0f;                                            // 단백질
+    public float fats = 0f;                                               // 지방
+    public float sugar = 0f;                                              // 당류
+    public float dietaryFiber = 0f;                                       // 식이섬유
+    public float vitamins = 0f;                                           // 비타민
 
-public class BodyManager : MonoBehaviour
-{
+    public GameObject[] Food;
 
-    public BodyType basicBodyType = BodyType.Basic;
+    // 영양소 표시용 UI 텍스트 등
+    public TextMesh nutritionText; // UI 텍스트 오브젝트에 연결
 
-    public int life = 3;
-    private float height = 173f;
-    private float weight = 74f;
-
-    public int score = 0;
+    // 영양소 초기화
+    public void ResetNutrition()
+    {
+        carbohydrates = 0f;
+        protein = 0f;
+        fats = 0f;
+        sugar = 0f;
+        dietaryFiber = 0f;
+        vitamins = 0f;
+    }
 
     private void Start()
     {
-        SetBodyType(basicBodyType);
+        // 게임 시작 시 초기 영양소 값을 설정합니다.
+        ResetNutrition();
     }
 
-    public void SetBodyType(BodyType newBodyType)
-    {
-        basicBodyType = newBodyType;
 
-        switch (newBodyType)
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("carbohydrates"))
         {
-            case BodyType.Obese:
-                life = 3;
-                height = 173f;
-                weight = 90f;
-                break;
-            case BodyType.Diabetic:
-                life = 3;
-                height = 173f;
-                weight = 74f;
-                break;
-            case BodyType.Athlete:
-                life = 3;
-                height = 173f;
-                weight = 74f;
-                break;
-            case BodyType.Underweight:
-                life = 3;
-                height = 173f;
-                weight = 55f;
-                break;
+            carbohydrates += 10;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("protein"))
+        {
+            protein += 10;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("fats"))
+        {
+            fats += 10;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("sugar"))
+        {
+            sugar += 10;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("dietaryFiber"))
+        {
+            carbohydrates += 10;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("vitamins"))
+        {
+            vitamins += 10;
+            Destroy(collision.gameObject);
         }
     }
 }
