@@ -1,44 +1,56 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+public enum BodyType
+{
+    Obese,                                               
+    Diabetic,                                     
+    Athlete,                                         
+    Underweight,                                     
+    Basic                                                
+}
 
 public class BodyManager : MonoBehaviour
 {
-    // 초기 상태 설정
+
     public BodyType basicBodyType = BodyType.Basic;
 
+    public int life = 3;
     private float height = 173f;
     private float weight = 74f;
+
+    public int score = 0;
 
     private void Start()
     {
         SetBodyType(basicBodyType);
     }
 
-    // 체질 변경
     public void SetBodyType(BodyType newBodyType)
     {
         basicBodyType = newBodyType;
 
-        // 체질에 따라 초기 상태 설정
         switch (newBodyType)
         {
             case BodyType.Obese:
+                life = 3;
                 height = 173f;
                 weight = 90f;
                 break;
             case BodyType.Diabetic:
+                life = 3;
                 height = 173f;
                 weight = 74f;
                 break;
             case BodyType.Athlete:
+                life = 3;
                 height = 173f;
                 weight = 74f;
                 break;
             case BodyType.Underweight:
+                life = 3;
                 height = 173f;
                 weight = 55f;
                 break;
         }
     }
-
 }
